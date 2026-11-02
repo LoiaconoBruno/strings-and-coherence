@@ -1,0 +1,10 @@
+{
+  "name": "superposicion-vibracion",
+  "version": "0.1.0",
+  "description": "Cuánto dura una superposición atada a una cuerda que vibra, y cómo una vibración compartida entrelaza",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test"
+  }
+}

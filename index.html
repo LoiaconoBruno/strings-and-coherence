@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Superposición y vibración</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .dos { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 860px) { .dos { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <h1>Superposición y vibración</h1>
+    <p>La vibración es una de las principales enemigas de la superposición y, al mismo tiempo, una vibración compartida puede conectar a dos partículas. Las dos versiones del experimento mental, con las fórmulas exactas.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>A. Una partícula en superposición, atada a cuerdas que vibran</h2>
+      <p class="small muted" style="margin-top:0">Cada uno de los dos estados de la partícula empuja a la cuerda hacia un lado distinto. Mientras las dos versiones de la cuerda difieren, la cuerda "sabe" en qué estado está la partícula y la superposición se borra: eso se llama decoherencia.</p>
+      <div class="layout">
+        <div>
+          <label for="n">Cantidad de cuerdas <span class="val" id="v-n"></span></label>
+          <input type="range" id="n" min="1" max="100" step="1" value="1">
+          <label for="g">Acoplamiento total (g/ω) <span class="val" id="v-g"></span></label>
+          <input type="range" id="g" min="0" max="0.8" step="0.01" value="0.3">
+          <label for="T">Temperatura (en unidades de ħω/k) <span class="val" id="v-T"></span></label>
+          <input type="range" id="T" min="0" max="10" step="0.1" value="1">
+          <label for="disp">Dispersión de frecuencias entre cuerdas <span class="val" id="v-disp"></span></label>
+          <input type="range" id="disp" min="0" max="1" step="0.05" value="0.6">
+          <div class="stats" style="margin-top:12px" aria-live="polite">
+            <div class="stat"><div class="k">Coherencia mínima</div><div class="v" id="s-min">—</div></div>
+            <div class="stat"><div class="k">¿Vuelve entera?</div><div class="v" id="s-vuelve">—</div></div>
+            <div class="stat"><div class="k">Nivel al que tiende</div><div class="v" id="s-meseta">—</div></div>
+          </div>
+        </div>
+        <div style="min-width:0">
+          <canvas id="g-coh" aria-label="Coherencia de la superposición en el tiempo"></canvas>
+          <p class="small muted" id="txt-a"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>B. Dos partículas que comparten una cuerda</h2>
+      <p class="small muted" style="margin-top:0">Ambas empiezan en superposición y empujan la misma cuerda. Al completar un período, la cuerda vuelve a su lugar y se desengancha, pero las partículas quedan con una fase que depende de si estaban alineadas o no: quedan <b>entrelazadas</b>. Es casi la imagen de dos esferas unidas por cuerdas que vibran, y es como se entrelazan los iones en algunas computadoras cuánticas.</p>
+      <div class="layout">
+        <div>
+          <label for="gb">Acoplamiento (g/ω) <span class="val" id="v-gb"></span></label>
+          <input type="range" id="gb" min="0" max="0.5" step="0.005" value="0.25">
+          <label for="per">Períodos de la compuerta <span class="val" id="v-per"></span></label>
+          <input type="range" id="per" min="1" max="4" step="1" value="1">
+          <label for="Tb">Temperatura de la cuerda <span class="val" id="v-Tb"></span></label>
+          <input type="range" id="Tb" min="0" max="10" step="0.1" value="2">
+          <div class="stats" style="margin-top:12px" aria-live="polite">
+            <div class="stat"><div class="k">Entrelazamiento al terminar</div><div class="v" id="s-conc">—</div></div>
+            <div class="stat"><div class="k">g/ω para el máximo</div><div class="v" id="s-gopt">—</div></div>
+          </div>
+        </div>
+        <div class="dos" style="min-width:0">
+          <div><canvas id="g-conc" aria-label="Entrelazamiento final según el acoplamiento"></canvas></div>
+          <div><canvas id="g-durante" aria-label="Enganche con la cuerda durante la compuerta"></canvas></div>
+        </div>
+      </div>
+      <p class="small muted">A la derecha: durante la compuerta las partículas se enredan con la cuerda (la curva baja, más cuanto más caliente) pero al final de cada período se desenganchan del todo, a cualquier temperatura.</p>
+    </section>
+
+    <section class="card">
+      <h2>¿Y dos partículas en el mismo punto?</h2>
+      <p class="small" style="margin:0">En mecánica cuántica, "superposición" es <b>una</b> partícula en una combinación de estados, no dos esferas en el mismo lugar. Dos partículas en el mismo punto es otra pregunta: los fermiones (electrones, protones) no pueden ocupar el mismo estado (principio de exclusión de Pauli, 1925); los bosones (fotones, ciertos átomos) sí, incluso todos juntos (condensado de Bose-Einstein, logrado en 1995).</p>
+    </section>
+  </main>
+
+  <footer>Modelos exactos pero idealizados: las partículas no son esferitas ni las cuerdas son cuerdas. La imagen sirve como intuición, no como modelo. Unidades con ħ = k = 1 y frecuencia de la cuerda ω = 1.</footer>
+
+  <script src="src/grafico.js"></script>
+  <script src="src/cuantica.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
