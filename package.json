@@ -1,10 +1,16 @@
 {
-  "name": "superposicion-vibracion",
+  "name": "strings-and-coherence",
   "version": "0.1.0",
-  "description": "Cuánto dura una superposición atada a una cuerda que vibra, y cómo una vibración compartida entrelaza",
+  "description": "Decoherencia exacta de una partícula acoplada a vibraciones y entrelazamiento por un modo compartido.",
   "private": true,
   "license": "MIT",
   "scripts": {
     "test": "node --test"
-  }
+  },
+  "homepage": "https://loiaconobruno.github.io/strings-and-coherence/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoiaconoBruno/strings-and-coherence.git"
+  },
+  "author": "Bruno Loiacono"
 }

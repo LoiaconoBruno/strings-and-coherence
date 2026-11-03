@@ -1,4 +1,19 @@
-# Superposición y vibración
+<div align="center">
+
+# Strings and Coherence
+
+**Superposición y vibración.** Cuánto dura una superposición atada a cuerdas que vibran, y cómo una vibración compartida entrelaza a dos partículas. Con fórmulas exactas.
+
+[**▶ Probala en vivo**](https://loiaconobruno.github.io/strings-and-coherence/) · [Cómo funciona](#cómo-funciona) · [Limitaciones](#limitaciones)
+
+[![Tests](https://github.com/LoiaconoBruno/strings-and-coherence/actions/workflows/tests.yml/badge.svg)](https://github.com/LoiaconoBruno/strings-and-coherence/actions/workflows/tests.yml)
+![Dependencias: 0](https://img.shields.io/badge/dependencias-0-brightgreen)
+![HTML, CSS y JavaScript](https://img.shields.io/badge/HTML%20%C2%B7%20CSS%20%C2%B7%20JS-sin%20build-f7df1e)
+[![Licencia MIT](https://img.shields.io/badge/licencia-MIT-blue)](LICENSE)
+
+<img src="docs/captura.png" alt="Captura de Strings and Coherence" width="800">
+
+</div>
 
 Página interactiva que traduce el experimento mental "dos partículas en el mismo punto, unidas por cuerdas que vibran" a dos preguntas que la mecánica cuántica sí sabe responder, con fórmulas exactas:
 
@@ -11,11 +26,23 @@ La intuición de la idea apunta a algo real: la vibración es una de las princip
 
 ## Instalación
 
-No hace falta instalar nada. Es una página estática sin dependencias. Para correr los tests hace falta Node 18 o más nuevo.
+No hace falta instalar nada: **[abrila en el navegador](https://loiaconobruno.github.io/strings-and-coherence/)**.
+
+Para usarla sin conexión o modificarla:
+
+```bash
+git clone https://github.com/LoiaconoBruno/strings-and-coherence.git
+```
+
+Después abrí `index.html` con doble clic. No hay dependencias ni paso de build. Para correr los tests hace falta Node 18 o más nuevo:
+
+```bash
+npm test
+```
 
 ## Uso
 
-Abrí `index.html` con doble clic. Todo se recalcula al mover un deslizador.
+Abrí la [demo en vivo](https://loiaconobruno.github.io/strings-and-coherence/) o `index.html` con doble clic. Todo se recalcula al mover un deslizador.
 
 Ejemplo:
 
