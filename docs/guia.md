@@ -338,7 +338,47 @@ Las partículas idénticas se dividen en dos familias. Los **fermiones** (electr
 
 Así que "dos partículas en el mismo punto" es posible para bosones y prohibido para fermiones, y no necesita cuerdas. La herramienta lo explica en su tercera tarjeta y se concentra en la parte de la idea que sí habla de vibraciones.
 
-### 19. Del modelo al código
+### 19. ¿Se puede deshacer la decoherencia? Los ecos
+
+La sección 17 dijo que, en el modelo, el estado conjunto de la partícula y las cuerdas sigue siendo puro todo el tiempo, y que si se pudiera deshacer el movimiento de las cuerdas la coherencia volvería. Hay una técnica que hace algo parecido, y su historia ilumina qué parte de la pérdida es realmente irreversible.
+
+#### 19.1 El eco de espín de Hahn
+
+En 1950, Erwin Hahn trabajaba con resonancia magnética nuclear en la Universidad de Illinois. Los núcleos de una muestra, puestos en superposición por un pulso de radiofrecuencia, precesan alrededor del campo magnético a frecuencias levemente distintas, porque el campo no es perfectamente uniforme. Al cabo de un tiempo, sus fases se desparraman y la señal total desaparece. Hahn descubrió que, si a un tiempo τ se aplica un segundo pulso que invierte los espines (un pulso π), los núcleos que iban adelantados quedan atrasados y viceversa, y al tiempo 2τ todas las fases vuelven a coincidir: la señal reaparece. Lo publicó como *Spin echoes* (*Physical Review*, 80(4), 580–594). La imagen que se suele usar es la de una carrera: a la mitad, se ordena a todos los corredores dar media vuelta; los más rápidos, que estaban más lejos, vuelven a la vez que los lentos, y todos llegan juntos a la largada.
+
+El eco muestra que una pérdida de coherencia causada por un **desfase estático** (frecuencias distintas pero fijas) no es una pérdida de información: la información está en las fases, y se puede recuperar invirtiendo la evolución.
+
+#### 19.2 El eco aplicado a las cuerdas
+
+¿Funciona con las cuerdas del modelo? La respuesta depende de la frecuencia de cada cuerda comparada con el tiempo del eco. Con un pulso π a la mitad del tiempo t, el exponente de cada cuerda pasa de 4 (g/ω)² (1 − cos ωt) coth(ω/2T) a
+
+$$ 32 (g/ω)² · sen⁴(ωt/4) · coth(ω/2T) $$
+
+Para cuerdas **lentas** comparadas con el tiempo del eco (ωt pequeño), el seno a la cuarta potencia es mucho menor que el término original, y el eco protege la coherencia: una cuerda con ωt = 0,6 deja, con los parámetros por defecto, 87 % de coherencia sin eco y más de 99 % con eco. Para una sola cuerda observada justo en ωt = 2π, en cambio, el eco es contraproducente: sin eco, la coherencia volvía entera; con el pulso a mitad de período, la cuerda queda en su máximo desplazamiento al final y la coherencia cae a casi cero. Recién en ωt = 4π vuelve a ser 1.
+
+La lección es que un eco no es un remedio universal. Funciona contra el ruido que cambia lento comparado con el ritmo de los pulsos, y puede empeorar las cosas frente a modos que oscilan a la frecuencia equivocada. Elegir el tiempo y la secuencia de pulsos es diseñar un **filtro** de frecuencias.
+
+#### 19.3 Muchos pulsos: el desacoplamiento dinámico
+
+Herman Carr y Edward Purcell propusieron en 1954 (*Physical Review*, 94(3), 630–638) repetir los pulsos π a intervalos regulares, y Saul Meiboom y David Gill mejoraron la secuencia en 1958 (*Review of Scientific Instruments*, 29(8), 688–691). La secuencia CPMG, por sus iniciales, sigue siendo un estándar en resonancia magnética. Lorenza Viola y Seth Lloyd mostraron en 1998 (*Physical Review A*, 58(4), 2733–2744) que la misma idea sirve para proteger qubits: aplicando pulsos rápidos, se puede "desacoplar" el sistema de un baño cuyas frecuencias son más lentas que el ritmo de los pulsos. Lo llamaron **desacoplamiento dinámico**. Michael Biercuk y colaboradores lo demostraron con iones atrapados en 2009 (*Nature*, 458, 996–1000), extendiendo mucho la vida de la coherencia con secuencias de pulsos optimizadas para el espectro de ruido medido.
+
+El desacoplamiento dinámico se usa hoy en casi todas las plataformas de computación cuántica. No vence a la decoherencia: la empuja hacia las frecuencias más altas, donde el baño suele tener menos peso.
+
+#### 19.4 Loschmidt y la irreversibilidad
+
+La posibilidad de revertir una evolución tiene una larga historia en física. En 1876, Josef Loschmidt le planteó a Ludwig Boltzmann una objeción a su explicación del aumento de la entropía: si las leyes de la mecánica son reversibles, invirtiendo las velocidades de todas las moléculas de un gas el sistema debería volver a su estado inicial, y la entropía disminuiría. La respuesta de Boltzmann fue, en esencia, práctica: no se puede invertir las velocidades de todas las moléculas.
+
+La decoherencia tiene la misma estructura. En el modelo, con muchas cuerdas, la información sobre la partícula no se destruye: queda repartida en las fases de todas ellas. Un eco perfecto, que invirtiera la evolución de cada cuerda, la recuperaría. En 1984, Asher Peres propuso medir la sensibilidad de un sistema cuántico a esas inversiones imperfectas con lo que hoy se llama **eco de Loschmidt** (*Physical Review A*, 30(4), 1610–1615): se evoluciona hacia adelante con un hamiltoniano y hacia atrás con uno levemente distinto, y se mide cuánto se aleja el resultado del estado inicial. En sistemas con muchos grados de libertad, la recuperación decae rápidamente con la imperfección.
+
+Para la idea original, la conclusión es interesante: la diferencia entre una cuerda y muchas no es que la información "se destruya" en un caso y no en el otro, sino que, con muchas, deshacer la pérdida exige un control que en la práctica no existe. La irreversibilidad de la decoherencia, como la de la termodinámica, es una irreversibilidad práctica.
+
+### 20. Qué tan bien se protegen los qubits hoy
+
+Los números concretos ayudan a ubicar el modelo. En los qubits superconductores, los primeros dispositivos de fines de los años noventa perdían la coherencia en nanosegundos; los actuales la conservan del orden de cien microsegundos, y en algunos diseños, milisegundos: una mejora de cinco órdenes de magnitud en un cuarto de siglo, lograda en buena parte identificando y eliminando "cuerdas" concretas: defectos en los materiales que se comportan como sistemas de dos niveles, radiación residual, modos electromagnéticos parásitos de los circuitos.
+
+En los iones atrapados, la coherencia del estado interno puede durar segundos o minutos, porque los niveles que se usan como qubit están muy aislados del entorno. El punto débil, en cambio, es justamente la cuerda compartida de la versión B: el modo de vibración de la cadena se calienta lentamente por el ruido eléctrico de los electrodos, y ese calentamiento limita la fidelidad de las compuertas. Es otra manera de ver la tensión de la sección 16: la misma vibración que permite entrelazar es la que hay que proteger del entorno.
+
+### 21. Del modelo al código
 
 | Concepto | Función en `src/cuantica.js` | Qué produce en la página |
 |---|---|---|
@@ -362,7 +402,7 @@ Q.concurrencia(0.25, 1);                               // 1
 Q.gOptimo(2);                                          // ≈ 0,177
 ```
 
-### 20. Ejercicios
+### 22. Ejercicios
 
 1. Con una cuerda y T = 0, ¿qué g/ω hace que la coherencia mínima sea 50 %? Despejá de exp(−8(g/ω)²) = 0,5 y comprobalo con el deslizador.
 2. Mostrá que, para T ≫ ω, coth(ω/2T) ≈ 2T/ω. ¿Cómo depende entonces la meseta de la temperatura?
@@ -372,7 +412,7 @@ Q.gOptimo(2);                                          // ≈ 0,177
 6. Un ion de calcio en una trampa tiene un modo de 1 MHz. ¿A qué temperatura en kelvin corresponde T = 1 en la herramienta? (ħω/k_B.)
 7. Leé el artículo de Mølmer y Sørensen de 1999 y explicá con tus palabras por qué la compuerta no depende de la temperatura.
 
-### 21. Glosario
+### 23. Glosario
 
 - **Superposición:** estado cuántico que es combinación lineal de otros estados, con amplitudes que pueden interferir.
 - **Coherencia:** elemento fuera de la diagonal de la matriz densidad; mide la capacidad de interferir.
@@ -384,7 +424,7 @@ Q.gOptimo(2);                                          // ≈ 0,177
 - **Fase geométrica:** fase que adquiere un estado al recorrer un camino cerrado, proporcional al área encerrada.
 - **Compuerta de Mølmer-Sørensen:** operación de dos qubits en iones atrapados basada en una vibración compartida, insensible a la temperatura del modo.
 
-### 22. Conclusión
+### 24. Conclusión
 
 La imagen de partículas unidas por cuerdas que vibran no describe literalmente ningún sistema, pero apunta a dos fenómenos reales y centrales de la física cuántica. Una vibración que registra el estado de una partícula le roba coherencia: si es una sola, se la devuelve; si son muchas, se la quita para siempre. Esa es la decoherencia que Zeh y Zurek explicaron y que Haroche midió. Una vibración compartida y controlada, en cambio, puede dejar a dos partículas entrelazadas sin quedar enredada con ellas: es la compuerta de Mølmer y Sørensen que hoy usan las computadoras cuánticas de iones. La herramienta pone números exactos a las dos caras y muestra la lección más importante: lo que separa lo cuántico de lo clásico no es el tamaño ni la fuerza, sino **cuántos lugares** hay para que la información se pierda.
 
@@ -397,10 +437,12 @@ Los próximos pasos naturales son agregar amortiguamiento a la cuerda (para ver 
 - Aspect, A., Grangier, P., & Roger, G. (1982). Experimental realization of Einstein-Podolsky-Rosen-Bohm Gedankenexperiment: A new violation of Bell's inequalities. *Physical Review Letters*, 49(2), 91–94. https://doi.org/10.1103/PhysRevLett.49.91
 - Bell, J. S. (1964). On the Einstein Podolsky Rosen paradox. *Physics Physique Fizika*, 1(3), 195–200. https://doi.org/10.1103/PhysicsPhysiqueFizika.1.195
 - Berry, M. V. (1984). Quantal phase factors accompanying adiabatic changes. *Proceedings of the Royal Society A*, 392(1802), 45–57. https://doi.org/10.1098/rspa.1984.0023
+- Biercuk, M. J., Uys, H., VanDevender, A. P., Shiga, N., Itano, W. M., & Bollinger, J. J. (2009). Optimized dynamical decoupling in a model quantum memory. *Nature*, 458, 996–1000. https://doi.org/10.1038/nature07951
 - Bloch, F. (1946). Nuclear induction. *Physical Review*, 70(7–8), 460–474. https://doi.org/10.1103/PhysRev.70.460
 - Breuer, H.-P., & Petruccione, F. (2002). *The Theory of Open Quantum Systems*. Oxford University Press. ISBN 978-0-19-852063-4.
 - Brune, M., Hagley, E., Dreyer, J., Maître, X., Maali, A., Wunderlich, C., Raimond, J. M., & Haroche, S. (1996). Observing the progressive decoherence of the "meter" in a quantum measurement. *Physical Review Letters*, 77(24), 4887–4890. https://doi.org/10.1103/PhysRevLett.77.4887
 - Caldeira, A. O., & Leggett, A. J. (1983). Path integral approach to quantum Brownian motion. *Physica A*, 121(3), 587–616. https://doi.org/10.1016/0378-4371(83)90013-4
+- Carr, H. Y., & Purcell, E. M. (1954). Effects of diffusion on free precession in nuclear magnetic resonance experiments. *Physical Review*, 94(3), 630–638. https://doi.org/10.1103/PhysRev.94.630
 - Cirac, J. I., & Zoller, P. (1995). Quantum computations with cold trapped ions. *Physical Review Letters*, 74(20), 4091–4094. https://doi.org/10.1103/PhysRevLett.74.4091
 - Davis, K. B., Mewes, M.-O., Andrews, M. R., van Druten, N. J., Durfee, D. S., Kurn, D. M., & Ketterle, W. (1995). Bose-Einstein condensation in a gas of sodium atoms. *Physical Review Letters*, 75(22), 3969–3973. https://doi.org/10.1103/PhysRevLett.75.3969
 - Dirac, P. A. M. (1930). *The Principles of Quantum Mechanics*. Oxford: Clarendon Press.
@@ -409,15 +451,18 @@ Los próximos pasos naturales son agregar amortiguamiento a la cuerda (para ver 
 - Fein, Y. Y., Geyer, P., Zwick, P., Kiałka, F., Pedalino, S., Mayor, M., Gerlich, S., & Arndt, M. (2019). Quantum superposition of molecules beyond 25 kDa. *Nature Physics*, 15, 1242–1245. https://doi.org/10.1038/s41567-019-0663-9
 - Ghirardi, G. C., Rimini, A., & Weber, T. (1986). Unified dynamics for microscopic and macroscopic systems. *Physical Review D*, 34(2), 470–491. https://doi.org/10.1103/PhysRevD.34.470
 - Glauber, R. J. (1963). Coherent and incoherent states of the radiation field. *Physical Review*, 131(6), 2766–2788. https://doi.org/10.1103/PhysRev.131.2766
+- Hahn, E. L. (1950). Spin echoes. *Physical Review*, 80(4), 580–594. https://doi.org/10.1103/PhysRev.80.580
 - Hornberger, K., Uttenthaler, S., Brezger, B., Hackermüller, L., Arndt, M., & Zeilinger, A. (2003). Collisional decoherence observed in matter wave interferometry. *Physical Review Letters*, 90(16), 160401. https://doi.org/10.1103/PhysRevLett.90.160401
 - Johansson, J. R., Nation, P. D., & Nori, F. (2012). QuTiP: An open-source Python framework for the dynamics of open quantum systems. *Computer Physics Communications*, 183(8), 1760–1772. https://doi.org/10.1016/j.cpc.2012.02.021
 - Joos, E., & Zeh, H. D. (1985). The emergence of classical properties through interaction with the environment. *Zeitschrift für Physik B*, 59(2), 223–243. https://doi.org/10.1007/BF01725541
 - Leggett, A. J., Chakravarty, S., Dorsey, A. T., Fisher, M. P. A., Garg, A., & Zwerger, W. (1987). Dynamics of the dissipative two-state system. *Reviews of Modern Physics*, 59(1), 1–85. https://doi.org/10.1103/RevModPhys.59.1
 - Leibfried, D., DeMarco, B., Meyer, V., Lucas, D., Barrett, M., Britton, J., Itano, W. M., Jelenković, B., Langer, C., Rosenband, T., & Wineland, D. J. (2003). Experimental demonstration of a robust, high-fidelity geometric two ion-qubit phase gate. *Nature*, 422, 412–415. https://doi.org/10.1038/nature01492
+- Meiboom, S., & Gill, D. (1958). Modified spin-echo method for measuring nuclear relaxation times. *Review of Scientific Instruments*, 29(8), 688–691. https://doi.org/10.1063/1.1716296
 - Mølmer, K., & Sørensen, A. (1999). Multiparticle entanglement of hot trapped ions. *Physical Review Letters*, 82(9), 1835–1838. https://doi.org/10.1103/PhysRevLett.82.1835
 - von Neumann, J. (1932). *Mathematische Grundlagen der Quantenmechanik*. Berlín: Springer.
 - Palma, G. M., Suominen, K.-A., & Ekert, A. K. (1996). Quantum computers and dissipation. *Proceedings of the Royal Society A*, 452(1946), 567–584. https://doi.org/10.1098/rspa.1996.0029
 - Pauli, W. (1925). Über den Zusammenhang des Abschlusses der Elektronengruppen im Atom mit der Komplexstruktur der Spektren. *Zeitschrift für Physik*, 31, 765–783. https://doi.org/10.1007/BF02980631
+- Peres, A. (1984). Stability of quantum motion in chaotic and regular systems. *Physical Review A*, 30(4), 1610–1615. https://doi.org/10.1103/PhysRevA.30.1610
 - Preskill, J. (2018). Quantum computing in the NISQ era and beyond. *Quantum*, 2, 79. https://doi.org/10.22331/q-2018-08-06-79
 - Schlosshauer, M. (2004). Decoherence, the measurement problem, and interpretations of quantum mechanics. *Reviews of Modern Physics*, 76(4), 1267–1305. https://doi.org/10.1103/RevModPhys.76.1267
 - Schlosshauer, M. (2007). *Decoherence and the Quantum-to-Classical Transition*. Springer. ISBN 978-3-540-35773-5.
@@ -425,6 +470,7 @@ Los próximos pasos naturales son agregar amortiguamiento a la cuerda (para ver 
 - Schrödinger, E. (1935). Discussion of probability relations between separated systems. *Mathematical Proceedings of the Cambridge Philosophical Society*, 31(4), 555–563. https://doi.org/10.1017/S0305004100013554
 - Shor, P. W. (1995). Scheme for reducing decoherence in quantum computer memory. *Physical Review A*, 52(4), R2493–R2496. https://doi.org/10.1103/PhysRevA.52.R2493
 - Sørensen, A., & Mølmer, K. (1999). Quantum computation with ions in thermal motion. *Physical Review Letters*, 82(9), 1971–1974. https://doi.org/10.1103/PhysRevLett.82.1971
+- Viola, L., & Lloyd, S. (1998). Dynamical suppression of decoherence in two-state quantum systems. *Physical Review A*, 58(4), 2733–2744. https://doi.org/10.1103/PhysRevA.58.2733
 - Wootters, W. K. (1998). Entanglement of formation of an arbitrary state of two qubits. *Physical Review Letters*, 80(10), 2245–2248. https://doi.org/10.1103/PhysRevLett.80.2245
 - Zeh, H. D. (1970). On the interpretation of measurement in quantum theory. *Foundations of Physics*, 1(1), 69–76. https://doi.org/10.1007/BF00708656
 - Zurek, W. H. (1981). Pointer basis of quantum apparatus: Into what mixture does the wave packet collapse? *Physical Review D*, 24(6), 1516–1525. https://doi.org/10.1103/PhysRevD.24.1516
