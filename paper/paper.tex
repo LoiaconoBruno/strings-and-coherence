@@ -1,0 +1,270 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+% Caracteres Unicode que aparecen en títulos de la bibliografía
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{03A9}{\ensuremath{\Omega}}
+\DeclareUnicodeCharacter{039B}{\ensuremath{\Lambda}}
+\usepackage[english,spanish,es-nodecimaldot,es-noquoting,es-noshorthands,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{csquotes}
+\usepackage[style=authoryear,backend=biber,maxcitenames=2,mincitenames=1,maxbibnames=10,uniquelist=false,uniquename=false,dashed=false,doi=true,url=true,isbn=false,eprint=true]{biblatex}
+\addbibresource{referencias.bib}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{./}}
+
+% Datos del documento (también los usa paper/web.py)
+\newcommand{\titulo}{Cuerdas y coherencia: una vibración que destruye la superposición y otra que entrelaza}
+\newcommand{\tituloen}{Strings and coherence: a vibration that destroys superposition and another that entangles}
+\newcommand{\repositorio}{https://github.com/LoiaconoBruno/strings-and-coherence}
+\newcommand{\citaclave}{loiacono2026cuerdas}
+
+% Resumen, abstract y palabras clave
+\newenvironment{resumen}{\par\noindent\small\textbf{Resumen.}\ }{\par\medskip}
+\newenvironment{abstractEN}{\par\noindent\small\begin{otherlanguage}{english}\textbf{Abstract.}\ }{\end{otherlanguage}\par\medskip}
+\newcommand{\palabrasclave}[1]{\par\noindent{\small\textbf{Palabras clave:} #1}\par\medskip}
+\newcommand{\keywords}[1]{\par\noindent{\small\begin{otherlanguage}{english}\textbf{Keywords:} #1\end{otherlanguage}}\par\medskip}
+
+% Encabezado de preprint en todas las páginas
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\textit{Preprint, documento de trabajo sin revisión por pares}}
+\fancyhead[R]{\footnotesize B.~Loiacono}
+\fancyfoot[C]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\title{\titulo}
+\author{Bruno Loiacono\\[2pt]\small Estudiante de Física, Universidad de Buenos Aires}
+\date{Noviembre de 2026\\[8pt]\fbox{\small Preprint, documento de trabajo sin revisión por pares}}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{resumen}
+La idea que motiva este trabajo era una imagen: partículas unidas por cuerdas que vibran, como si la vibración las mantuviera en un estado especial. La imagen apunta a dos fenómenos reales que este trabajo calcula con fórmulas exactas. En el primero, un qubit acoplado linealmente a osciladores armónicos pierde coherencia porque cada uno de sus estados deja una huella distinta en las vibraciones. Con un solo oscilador y $g/\omega = 0{,}3$ a temperatura $k_BT = \hbar\omega$, la coherencia baja al 21~\% a mitad de período y vuelve entera en cada período. Con 50 osciladores de frecuencias distintas y el mismo acoplamiento total, se estanca cerca del 39~\%: la irreversibilidad viene de la cantidad de lugares donde se reparte la información, no de la fuerza del acoplamiento. En el límite de un baño óhmico continuo se recupera un decaimiento exponencial con $T_2 = \hbar/(\pi\eta k_BT)$. En el segundo, dos qubits que empujan la misma vibración quedan entrelazados por una fase geométrica, con concurrencia $|\sin(8\pi n (g/\omega)^2)|$ al cabo de $n$ períodos, independiente de la temperatura: es el principio de las compuertas de Mølmer y Sørensen en iones atrapados.
+\end{resumen}
+
+\begin{abstractEN}
+The idea behind this paper was an image: particles tied together by vibrating strings, as if the vibration kept them in a special state. The image points to two real phenomena that this paper computes with exact formulas. In the first, a qubit linearly coupled to harmonic oscillators loses coherence because each of its states leaves a different imprint on the vibrations. With a single oscillator, $g/\omega = 0.3$ and $k_BT = \hbar\omega$, coherence drops to 21\% at half a period and fully returns every period. With 50 oscillators of different frequencies and the same total coupling, it settles near 39\%: irreversibility comes from the number of places where information spreads, not from the coupling strength. In the limit of a continuous ohmic bath an exponential decay with $T_2 = \hbar/(\pi\eta k_BT)$ is recovered. In the second, two qubits pushing the same vibration become entangled through a geometric phase, with concurrence $|\sin(8\pi n (g/\omega)^2)|$ after $n$ periods, independent of temperature: the principle behind Mølmer--Sørensen gates in trapped ions.
+\end{abstractEN}
+
+\palabrasclave{decoherencia; desfasaje puro; modelo spin-bosón; entrelazamiento; fase geométrica; eco de espín.}
+\keywords{decoherence; pure dephasing; spin-boson model; entanglement; geometric phase; spin echo.}
+
+\section{Introducción}\label{sec:intro}
+
+La idea original era una imagen: dos partículas en el mismo lugar, unidas por cuerdas que vibran, como si la vibración las mantuviera en un estado especial. La imagen mezcla conceptos. En mecánica cuántica, una superposición no es dos cosas en el mismo lugar sino \emph{una} cosa en una combinación de estados, y «dos partículas en el mismo punto» es otro tema, el de la estadística de fermiones y bosones.
+
+Lo que la intuición capta bien es que la vibración y la superposición están íntimamente relacionadas. Una superposición acoplada a algo que vibra puede perderse: es la decoherencia. Y dos superposiciones acopladas a la misma vibración pueden correlacionarse: es el entrelazamiento. La sección~\ref{sec:antecedentes} resume la historia de las dos preguntas. La sección~\ref{sec:modelo} escribe dos modelos con solución exacta y deriva sus fórmulas con unidades explícitas. La sección~\ref{sec:resultados} los evalúa. La sección~\ref{sec:discusion} discute qué tienen en común, qué resuelve la decoherencia y qué no, y la pregunta de las partículas en el mismo punto.
+
+\section{Antecedentes}\label{sec:antecedentes}
+
+\subsection{Superposición y coherencia}
+
+\textcite{dirac1930} puso en el centro de la mecánica cuántica el principio de superposición: si $|0\rangle$ y $|1\rangle$ son estados posibles, también lo es $\alpha|0\rangle + \beta|1\rangle$, con $|\alpha|^2 + |\beta|^2 = 1$. Una superposición no es ignorancia: las amplitudes interfieren. La matriz densidad distingue una superposición de una mezcla clásica: sus elementos diagonales son las probabilidades y los no diagonales, $\rho_{01} = \alpha\beta^*$, las \emph{coherencias}, que miden la capacidad de interferir. Una mezcla tiene la misma diagonal y $\rho_{01} = 0$. \textcite{schrodinger1935a} planteó el gato en superposición de vivo y muerto como una reducción al absurdo: algo falta en una teoría que predice superposiciones macroscópicas que nadie ve.
+
+\subsection{Entrelazamiento}
+
+\textcite{einstein1935} mostraron que la mecánica cuántica permite estados de dos partículas en los que medir una determina el resultado de medir la otra, y concluyeron que la teoría estaba incompleta. \textcite{schrodinger1935b} llamó a ese rasgo entrelazamiento y lo consideró el característico de la teoría. \textcite{bell1964} demostró que ninguna teoría de variables ocultas locales reproduce todas sus predicciones, y \textcite{aspect1982} hicieron una de las pruebas experimentales decisivas. Para dos qubits en un estado puro $a|00\rangle + b|01\rangle + c|10\rangle + d|11\rangle$, el entrelazamiento se mide con la \emph{concurrencia} de \textcite{wootters1998},
+\begin{equation}\label{eq:concurrencia}
+C = 2\,|ad - bc| ,
+\end{equation}
+que va de 0, un estado producto, a 1, un estado de Bell.
+
+\subsection{Decoherencia}
+
+\textcite{zeh1970} señaló que ningún sistema macroscópico está aislado: su interacción con el entorno lo entrelaza con él, y si se mira solo el sistema, las coherencias desaparecen. \textcite{zurek1981,zurek2003} mostró que el entorno selecciona ciertos estados robustos, los \emph{estados puntero}, y destruye rápidamente las superposiciones entre ellos. \textcite{joos1985} estimaron cuán rápido ocurre para objetos macroscópicos, y \textcite{schlosshauer2007} reunió el campo en un libro. \textcite{brune1996} observaron por primera vez la decoherencia progresiva de un «medidor»: un campo de microondas en una cavidad, que hacía de cuerda de luz. \textcite{arndt1999} mostraron interferencia con moléculas de fullereno; \textcite{hornberger2003} midieron cómo las colisiones con un gas la destruyen, cada colisión una cuerda que registra por dónde pasó la molécula; y \textcite{fein2019} llegaron a moléculas de más de 25\,000 unidades de masa atómica.
+
+\subsection{Sistemas cuánticos abiertos}
+
+El modelo de la sección~\ref{sec:modeloA} es un caso particular del modelo spin-bosón: \textcite{caldeira1983} estudiaron el movimiento browniano cuántico con un baño de osciladores, y \textcite{leggett1987} escribieron la revisión clásica del sistema de dos niveles disipativo. El caso de desfasaje puro tiene solución exacta, que \textcite{palma1996} analizaron para estimar la decoherencia en una computadora cuántica y que \textcite{breuer2007} desarrollan en su libro. La notación $T_1$ y $T_2$ para los tiempos de relajación viene de \textcite{bloch1946}.
+
+\subsection{Vibraciones que entrelazan}
+
+\textcite{cirac1995} propusieron usar el modo de vibración compartido de una cadena de iones atrapados para hacer compuertas cuánticas, con la vibración en su estado fundamental. \textcite{molmer1999} y \textcite{sorensen1999} encontraron una compuerta que funciona con iones «calientes», porque solo depende de una fase geométrica en el sentido de \textcite{berry1984}. \textcite{leibfried2003} demostraron una compuerta de fase geométrica de alta fidelidad con dos iones de berilio, con un acoplamiento del tipo de la sección~\ref{sec:modeloB}.
+
+\subsection{Ecos}
+
+\textcite{hahn1950} descubrió que un pulso que invierte los espines a mitad de camino hace reaparecer la señal perdida por un desfase estático: el eco de espín. \textcite{carr1954} y \textcite{meiboom1958} propusieron repetir los pulsos, \textcite{viola1998} mostraron que la idea sirve para desacoplar un qubit de un baño lento, y \textcite{biercuk2009} lo demostraron con iones atrapados. \textcite{peres1984} propuso medir la sensibilidad de un sistema cuántico a una inversión imperfecta, el eco de Loschmidt.
+
+\section{Modelos}\label{sec:modelo}
+
+\subsection{Unidades}
+
+Se escriben las fórmulas con $\hbar$ y $k_B$ explícitos. Las frecuencias $\omega_k$ y los acoplamientos $g_k$ están en $\mathrm{s^{-1}}$, de modo que $g_k/\omega_k$ es adimensional, y $\hbar\omega/(k_BT)$ también. Los cálculos numéricos usan $\hbar = k_B = 1$ y una frecuencia de referencia $\omega_0 = 1$: el tiempo va en unidades de $1/\omega_0$ y la temperatura en unidades de $\hbar\omega_0/k_B$. Para un oscilador con $\omega_0/2\pi = 1$~MHz, $T = 1$ corresponde a 48~µK; para uno de 1~THz, a 48~K.
+
+\subsection{Versión A: un qubit y sus cuerdas}\label{sec:modeloA}
+
+El qubit tiene dos estados, que se describen con $\sigma_z$ ($+1$ en $|0\rangle$ y $-1$ en $|1\rangle$). Cada cuerda es un oscilador armónico con operadores $a_k$ y $a_k^\dagger$. El hamiltoniano es
+\begin{equation}\label{eq:hamA}
+H = \sum_k \hbar\omega_k\, a_k^\dagger a_k + \hbar\,\sigma_z \sum_k g_k \left(a_k + a_k^\dagger\right),
+\end{equation}
+con los dos términos en unidades de energía. El qubit empuja cada cuerda en un sentido si está en $|0\rangle$ y en el opuesto si está en $|1\rangle$. Ningún término cambia el estado del qubit: las probabilidades se conservan y solo cambia la coherencia. Es un modelo de \emph{desfasaje puro}.
+
+Si la cuerda $k$ empieza en el vacío, en cada rama evoluciona a un estado coherente \parencite{glauber1963} de amplitud
+\begin{equation}\label{eq:huellas}
+\alpha_\pm^{(k)}(t) = \pm\frac{g_k}{\omega_k}\left(e^{-i\omega_k t} - 1\right),
+\end{equation}
+adimensional. La distancia entre las dos huellas es $|\alpha_+ - \alpha_-|^2 = 8 (g_k/\omega_k)^2 (1 - \cos\omega_k t)$: nula al principio, máxima a mitad de período y nula otra vez al completarlo. La coherencia que queda es el solapamiento de las huellas, $e^{-|\alpha_+ - \alpha_-|^2/2}$ para cada cuerda. Si las cuerdas empiezan en equilibrio térmico, las fluctuaciones multiplican el exponente por $\coth(\hbar\omega_k/2k_BT)$, que vale 1 a temperatura cero y crece como $2k_BT/\hbar\omega_k$ a temperatura alta \parencite{palma1996,breuer2007}. La fórmula exacta es
+\begin{equation}\label{eq:coherencia}
+\frac{|\rho_{01}(t)|}{|\rho_{01}(0)|} = \prod_k \exp\!\left[-4\left(\frac{g_k}{\omega_k}\right)^2 (1 - \cos\omega_k t)\,\coth\frac{\hbar\omega_k}{2k_BT}\right].
+\end{equation}
+Con una cuerda, el exponente vuelve a cero en cada período $2\pi/\omega$ y la coherencia vuelve entera. Con muchas cuerdas de frecuencias distintas, los cosenos se desfasan, su promedio se anula y la coherencia tiende a la meseta
+\begin{equation}\label{eq:meseta}
+\exp\!\left[-\sum_k 4\left(\frac{g_k}{\omega_k}\right)^2 \coth\frac{\hbar\omega_k}{2k_BT}\right].
+\end{equation}
+Para comparar con la misma fuerza total, con $n$ cuerdas se usa $g_k = g/\sqrt n$, de modo que $\sum_k g_k^2 = g^2$. Si las frecuencias están equiespaciadas con separación $\Delta\omega$, los cosenos vuelven a estar en fase después de $2\pi/\Delta\omega$.
+
+\subsection{El baño continuo}
+
+En un material real el qubit se acopla a un continuo de modos. La suma se reemplaza por una integral con la densidad espectral $J(\omega) = 4\sum_k g_k^2\,\delta(\omega - \omega_k)$, en $\mathrm{s^{-1}}$, y la coherencia es $e^{-\Gamma(t)}$ con
+\begin{equation}\label{eq:gamma}
+\Gamma(t) = \int_0^\infty \mathrm{d}\omega\, \frac{J(\omega)}{\omega^2}\,(1 - \cos\omega t)\,\coth\frac{\hbar\omega}{2k_BT},
+\end{equation}
+adimensional porque $J\,\mathrm{d}\omega/\omega^2$ lo es. Para un baño óhmico, $J(\omega) = \eta\,\omega\, e^{-\omega/\omega_c}$ con $\eta$ adimensional, a temperatura alta ($k_BT \gg \hbar\omega_c$) se puede usar $\coth x \approx 1/x$, y para $t \gg 1/\omega_c$, $\int_0^\infty (1 - \cos\omega t)\,\omega^{-2}\,\mathrm{d}\omega = \pi t/2$. Queda
+\begin{equation}\label{eq:T2}
+\Gamma(t) \approx \frac{\pi\eta k_BT}{\hbar}\,t = \frac{t}{T_2}, \qquad T_2 = \frac{\hbar}{\pi\eta k_BT},
+\end{equation}
+donde $\hbar/(k_BT)$ tiene unidades de tiempo. La coherencia decae como una exponencial simple: es el tiempo de desfasaje que se informa para cada qubit.
+
+\subsection{El eco}
+
+Si a mitad del tiempo total $t$ se aplica un pulso que invierte el qubit, la fuerza sobre cada cuerda cambia de signo y la distancia entre huellas pasa a ser proporcional a $|1 - 2e^{i\omega t/2} + e^{i\omega t}|^2 = 16\sin^4(\omega t/4)$. El exponente de cada cuerda queda
+\begin{equation}\label{eq:eco}
+32\left(\frac{g}{\omega}\right)^2 \sin^4\!\left(\frac{\omega t}{4}\right)\coth\frac{\hbar\omega}{2k_BT}.
+\end{equation}
+Para $\omega t \ll 1$ es mucho menor que el original: el eco protege contra cuerdas lentas. Para $\omega t = 2\pi$ es máximo, mientras que sin eco la coherencia habría vuelto entera.
+
+\subsection{Versión B: dos qubits y una cuerda compartida}\label{sec:modeloB}
+
+Si dos qubits empujan la misma cuerda,
+\begin{equation}\label{eq:hamB}
+H = \hbar\omega\, a^\dagger a + \hbar g\,(\sigma_z^{(1)} + \sigma_z^{(2)})\,(a + a^\dagger).
+\end{equation}
+La suma $S = \sigma_z^{(1)} + \sigma_z^{(2)}$ vale $\pm 2$ si los qubits están alineados y 0 si están opuestos. Para cada valor de $S$, completando el cuadrado, $H = \hbar\omega\,(a + gS/\omega)^\dagger(a + gS/\omega) - \hbar g^2 S^2/\omega$: la cuerda describe un círculo en el espacio de fases, vuelve a su estado inicial cada período, y la rama acumula una fase $g^2S^2 t/\omega$. Al cabo de $n$ períodos, $t = 2\pi n/\omega$, la fase de las ramas alineadas respecto de las opuestas es
+\begin{equation}\label{eq:fase}
+\varphi = 8\pi n \left(\frac{g}{\omega}\right)^2 ,
+\end{equation}
+adimensional. Partiendo de los dos qubits en $(|0\rangle + |1\rangle)/\sqrt2$, el estado final es $\tfrac12(e^{i\varphi}|00\rangle + |01\rangle + |10\rangle + e^{i\varphi}|11\rangle)$, y la ecuación~\eqref{eq:concurrencia} da
+\begin{equation}\label{eq:concB}
+C = \left|\sin\!\left(8\pi n \left(\frac{g}{\omega}\right)^2\right)\right|,
+\end{equation}
+que es máxima para $g/\omega = 1/(4\sqrt n)$. Como la cuerda vuelve exactamente a su estado inicial, sea cual sea, el resultado no depende de la temperatura. Durante la compuerta, en cambio, los qubits están entrelazados con la cuerda, y su coherencia con ella sigue la ecuación~\eqref{eq:coherencia} con fuerza $2g$.
+
+\section{Resultados}\label{sec:resultados}
+
+Todas las cifras salen de \texttt{paper/figuras/generar.js}.
+
+\subsection{Una cuerda: pérdida reversible}
+
+Con una cuerda, $g/\omega = 0{,}3$ y $T = 1$, el factor térmico es $\coth(0{,}5) = 2{,}164$ y el exponente a mitad de período vale $8 \cdot 0{,}09 \cdot 2{,}164 = 1{,}558$: la coherencia mínima es 21,1~\%, y en $t = 2\pi$ vuelve al 100~\% (figura~\ref{fig:una}). A temperatura cero, con $g/\omega = 0{,}1$ la coherencia apenas baja al 92,3~\%, y con $g/\omega = 0{,}6$ cae al 5,6~\% pero también vuelve entera. Bajar mucho no es lo mismo que perderse: la información estuvo un rato en la cuerda y regresó.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figuras/una-cuerda}
+\caption{Coherencia de un qubit acoplado a una sola cuerda, con $g/\omega = 0{,}3$, a tres temperaturas, según la ecuación~\eqref{eq:coherencia}. Vuelve entera en cada período.}
+\label{fig:una}
+\end{figure}
+
+\subsection{Muchas cuerdas: pérdida irreversible}
+
+Con 50 cuerdas de frecuencias entre $0{,}7$ y $1{,}3$, cada una con $g_k = 0{,}3/\sqrt{50} = 0{,}042$, el mismo acoplamiento total, la coherencia mínima es 17,7~\%, en $t = 60$ vale 40,9~\% y la meseta~\eqref{eq:meseta} es 39,2~\% (figura~\ref{fig:muchas}). Con las mismas 50 cuerdas sin dispersión de frecuencias, la coherencia vuelve entera en $t = 2\pi$: se comportan como una sola. La irreversibilidad aparece por la variedad de frecuencias, no por la cantidad de acoplamiento. Con frecuencias equiespaciadas a $\Delta\omega = 0{,}0122$ hay una recurrencia en $2\pi/\Delta\omega = 513$, donde la coherencia sube al 62,6~\%: un retorno parcial, porque los cosenos vuelven a estar en fase entre sí pero no en cero. En un baño continuo no hay recurrencias.
+
+El calor empeora todo (figura~\ref{fig:temp}). Con las 50 cuerdas a $T = 5$, $\coth(0{,}1) = 10{,}03$, el mínimo cae a 0,0~\% y la meseta a 1,2~\%. Una cuerda caliente tiene más maneras de registrar en qué estado está el qubit.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figuras/muchas-cuerdas}
+\caption{Coherencia con una cuerda y con 50 cuerdas del mismo acoplamiento total, a $T = 1$. Con muchas frecuencias distintas la coherencia ya no vuelve y oscila alrededor de la meseta~\eqref{eq:meseta}.}
+\label{fig:muchas}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figuras/temperatura}
+\caption{Coherencia mínima con una cuerda y meseta con 50 cuerdas en función de la temperatura, con $g/\omega = 0{,}3$.}
+\label{fig:temp}
+\end{figure}
+
+\subsection{El baño continuo}
+
+Para un baño óhmico con $\eta = 0{,}02$, $\omega_c = 5$ y $T = 20$, la integral~\eqref{eq:gamma} calculada numéricamente vale $\Gamma(10) = 11{,}78$, frente a $t/T_2 = 12{,}57$ de la ecuación~\eqref{eq:T2}, con $T_2 = 0{,}796$. La curva numérica crece con la misma pendiente que la recta, con un corrimiento constante debido al corte finito (figura~\ref{fig:bano}). Con 50 cuerdas el modelo ya no vuelve; con infinitas repartidas según $J(\omega)$, la meseta se convierte en el decaimiento exponencial de un $T_2$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figuras/bano}
+\caption{Exponente de decoherencia para un baño óhmico continuo, calculado con la ecuación~\eqref{eq:gamma}, y su forma asintótica lineal~\eqref{eq:T2}.}
+\label{fig:bano}
+\end{figure}
+
+\subsection{El eco}
+
+Con $g/\omega = 0{,}3$ y $T = 1$, para $\omega t = 0{,}6$ la coherencia es 87,3~\% sin eco y 99,7~\% con un pulso a mitad de camino. Para $\omega t = 2\pi$, en cambio, sin eco vuelve al 100~\% y con eco cae al 0,2~\%, porque la cuerda queda en su máximo desplazamiento al final; recién en $\omega t = 4\pi$ vuelve a ser 100~\% (figura~\ref{fig:eco}). Un eco es un filtro de frecuencias, no un remedio universal.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figuras/eco}
+\caption{Coherencia al final de un tiempo total $\omega t$, sin eco y con un pulso de inversión en $t/2$, ecuaciones~\eqref{eq:coherencia} y~\eqref{eq:eco}.}
+\label{fig:eco}
+\end{figure}
+
+\subsection{La compuerta}
+
+Con $g/\omega = 0{,}25$ y un período, $\varphi = \pi/2$ y la concurrencia final es 100~\%, a cualquier temperatura. Con dos períodos y el mismo acoplamiento la fase se duplica y la concurrencia vuelve a 0~\%; el óptimo para dos períodos es $g/\omega = 1/(4\sqrt2) = 0{,}177$ (figura~\ref{fig:compuerta}). Durante la compuerta, la coherencia de los qubits con la cuerda a mitad de camino es 13,5~\% a $T = 0$, 1,3~\% a $T = 1$ y 0,0~\% a $T = 5$, pero al final vuelve al 100~\% en los tres casos (figura~\ref{fig:durante}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figuras/compuerta}
+\caption{Concurrencia de los dos qubits al terminar la compuerta, ecuación~\eqref{eq:concB}, para uno y dos períodos.}
+\label{fig:compuerta}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figuras/durante-compuerta}
+\caption{Coherencia entre las ramas de distinto espín total durante la compuerta, con $g/\omega = 0{,}25$, a tres temperaturas: cuanto más caliente la cuerda, más enredados quedan los qubits con ella a mitad de camino, pero al final se desenganchan.}
+\label{fig:durante}
+\end{figure}
+
+\section{Discusión y limitaciones}\label{sec:discusion}
+
+\subsection{La vibración como enemiga y como herramienta}
+
+Las dos versiones son el mismo fenómeno visto desde lados opuestos: el estado de los qubits se imprime en la vibración. En la versión A esa impresión es indeseada; en la B es controlada y se deshace al final. La diferencia está en tres cosas: cuántas cuerdas hay (una devuelve la información, muchas la dispersan), cuándo se mira (la compuerta termina justo cuando la cuerda se desengancha) y quién controla (en la A las cuerdas son el entorno; en la B, una parte diseñada del aparato). Es la tensión central de la ingeniería cuántica: los qubits tienen que interactuar fuertemente entre sí y débilmente con todo lo demás \parencite{preskill2018}. \textcite{shor1995} mostró una tercera estrategia, corregir errores repartiendo un qubit lógico entre varios físicos: en cierto sentido, la versión A al revés, con lugares controlados para que la información se disperse.
+
+\subsection{Qué resuelve la decoherencia y qué no}
+
+La decoherencia explica por qué no vemos interferencia entre estados macroscópicamente distintos, por qué ciertos estados son los que vemos y por qué la transición parece irreversible. No explica por qué, en cada medición, aparece un resultado y no otro: el estado conjunto de qubit y cuerdas sigue siendo puro, y lo que desapareció es la posibilidad práctica de ver interferencia. Para eso hace falta una interpretación, o una modificación de la dinámica como la de \textcite{ghirardi1986}. \textcite{schlosshauer2005} concluye que la decoherencia es compatible con las interpretaciones principales y necesaria para todas, pero no elige entre ellas. En los modelos de este trabajo esto se ve directamente: la coherencia graficada es la del qubit solo; con una cuerda vuelve sola, y con muchas volvería si se pudiera invertir el movimiento de cada una, como intenta el eco. La irreversibilidad de la decoherencia, como la de la termodinámica según la objeción de Loschmidt a Boltzmann, es práctica: deshacerla exige un control que no existe \parencite{peres1984}.
+
+\subsection{¿Y dos partículas en el mismo punto?}
+
+La imagen original pedía dos partículas en el mismo lugar. La respuesta de la mecánica cuántica no pasa por cuerdas. Los fermiones obedecen el principio de exclusión de \textcite{pauli1925}: dos fermiones idénticos no pueden ocupar el mismo estado. Los bosones pueden, y a temperatura suficientemente baja se acumulan en el estado de menor energía: el condensado de Bose--Einstein, logrado en 1995 con rubidio \parencite{anderson1995} y con sodio \parencite{davis1995}.
+
+\subsection{Limitaciones}
+
+\begin{itemize}
+\item Los modelos son idealizados: acoplamiento lineal, cuerdas armónicas sin amortiguamiento y qubits de dos niveles.
+\item La meseta de la versión A vale para tiempos largos frente al desfase y cortos frente a la recurrencia.
+\item La compuerta de la versión B ignora los errores de los experimentos reales: calentamiento de la cuerda, ruido de los láseres y modos espectadores.
+\item Las fórmulas son exactas para estos modelos pero no se compararon con una simulación numérica independiente.
+\end{itemize}
+
+\section{Conclusiones y trabajo futuro}\label{sec:conclusiones}
+
+La imagen de partículas unidas por cuerdas que vibran no describe literalmente ningún sistema, pero apunta a dos fenómenos centrales de la física cuántica. Una vibración que registra el estado de un qubit le roba coherencia: si es una sola, se la devuelve; si son muchas, se la quita en la práctica para siempre, y en el límite continuo aparece el tiempo de desfasaje $T_2$. Una vibración compartida y controlada puede dejar a dos qubits entrelazados sin quedar enredada con ellos, a cualquier temperatura. Lo que separa lo cuántico de lo clásico en estos modelos no es la fuerza del acoplamiento sino cuántos lugares hay para que la información se pierda. El trabajo futuro es agregar amortiguamiento a la cuerda, para ver cuándo la compuerta deja de ser perfecta, y comparar las fórmulas exactas con una simulación numérica en QuTiP \parencite{johansson2012}.
+
+\section*{Declaración de uso de IA}
+
+Este trabajo se redactó con asistencia de Claude (Anthropic), un modelo de lenguaje, a partir de una guía previa del autor. El modelo propuso la estructura, la redacción, las derivaciones y chequeos de unidades y el script que genera las figuras; el alcance y las decisiones son del autor, que es responsable del contenido. Las referencias se verificaron contra Crossref, Open Library y las páginas citadas con \texttt{paper/verificar\_bib.py}, y todas las cifras de la sección~\ref{sec:resultados} salen de \texttt{paper/figuras/generar.js}.
+
+\printbibliography
+
+\end{document}
